@@ -18,7 +18,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Package
       run: |
-        cd src/LinkManager.Api.GraphQL
+        cd CodingChallengeAPI
         dotnet new tool-manifest
         dotnet tool install Amazon.Lambda.Tools
         dotnet lambda package
@@ -26,7 +26,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           name: deploy-package.zip
-          path: src/LinkManager.Api.GraphQL/bin/serverless/
+          path: CodingChallengeAPI/bin/serverless/
   deploy:
     name: deploy
     needs: build
@@ -40,11 +40,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: deploy-package.zip
-        path: src/LinkManager.Api.GraphQL/bin/serverless/
+        path: CodingChallengeAPI/bin/serverless/
 
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: src/LinkManager.Api.GraphQL/bin/serverless
+      working-directory: CodingChallengeAPI/bin/serverless
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -52,7 +52,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Deploy
       run: |
-        cd src/LinkManager.Api.GraphQL
+        cd CodingChallengeAPI
         npm install -g serverless
         serverless deploy --stage production
       env:
