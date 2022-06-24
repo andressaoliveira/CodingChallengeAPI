@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using CodingChallengeAPI.Models;
 
 namespace CodingChallengeAPI.Controllers
 {
@@ -18,15 +19,15 @@ namespace CodingChallengeAPI.Controllers
         public async Task<List<Filme>> GetFilmes([FromQuery] string busca)
         {
             var filmeProcesso = new FilmeProcesso();
-            var filme = await filmeProcesso.getFilmes(busca);
+            var filmes = await filmeProcesso.getFilmes(busca);
 
-            return filme;
+            return filmes;
         }
 
 
         [Route("PesquisarByIdTitulo")]
         [HttpGet]
-        public async Task<Filme> GetFilmeByIDorTitle([FromQuery] string tituloFilme)
+        public async Task<Filme> GetFilmeByIdOrTitle([FromQuery] string tituloFilme)
         {
             var filmeProcesso = new FilmeProcesso();
             var filme = await filmeProcesso.getFilme(null, tituloFilme);

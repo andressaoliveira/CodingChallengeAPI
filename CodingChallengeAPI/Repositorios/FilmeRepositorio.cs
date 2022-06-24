@@ -1,4 +1,7 @@
+using CodingChallengeAPI.Models;
+using MySqlConnector;
 using Newtonsoft.Json;
+using System.Data;
 using System.Net.Http.Headers;
     
    public class FilmeRepositorio

@@ -10,7 +10,6 @@ C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\bin\Debug\net
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.csproj.AssemblyReference.cache
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.AssemblyInfoInputs.cache
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.AssemblyInfo.cs
@@ -26,3 +25,5 @@ C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.pdb
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.genruntimeconfig.cache
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\bin\Debug\net6.0\MySqlConnector.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.csproj.AssemblyReference.cache

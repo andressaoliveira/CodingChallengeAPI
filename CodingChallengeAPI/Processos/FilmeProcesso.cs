@@ -1,12 +1,9 @@
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
-    
-   public class FilmeProcesso
+using CodingChallengeAPI.Models;
+
+public class FilmeProcesso
 {
     public FilmeProcesso()
-    {
-
-    }
+    { }
 
     public async Task<Filme> getFilme(string idFilme, string tituloFilme)
     {
