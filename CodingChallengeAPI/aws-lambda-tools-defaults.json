@@ -1,0 +1,6 @@
+{
+  "Information": [],
+  "configuration": "Release",
+  "framework": "netcoreapp6.0",
+  "outuput-package": "bin/serverless/de´ploy-package.zip"
+}
