@@ -1,0 +1,13 @@
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\CodingChallengeAPI.exe
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\CodingChallengeAPI.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\CodingChallengeAPI.deps.json
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\CodingChallengeAPI.runtimeconfig.json
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\CodingChallengeAPI.pdb
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\MySqlConnector.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

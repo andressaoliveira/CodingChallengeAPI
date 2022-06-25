@@ -1,0 +1,187 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "CodingChallengeAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Filme/Pesquisar": {
+      "get": {
+        "tags": [
+          "Filme"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "busca",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Filme"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Filme/PesquisarByIdTitulo": {
+      "get": {
+        "tags": [
+          "Filme"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tituloFilme",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Filme"
+            }
+          }
+        }
+      }
+    },
+    "/Usuario/Usuarios": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Usuario"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Usuario/Usuario": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idUsuario",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Usuario"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Filme": {
+      "type": "object",
+      "properties": {
+        "imdbID": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "year": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "runtime": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "director": {
+          "type": "string"
+        },
+        "writer": {
+          "type": "string"
+        },
+        "actors": {
+          "type": "string"
+        },
+        "plot": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "awards": {
+          "type": "string"
+        },
+        "poster": {
+          "type": "string"
+        }
+      }
+    },
+    "Usuario": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "pontos": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "perfil": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
