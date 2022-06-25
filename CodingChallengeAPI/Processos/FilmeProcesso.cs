@@ -5,16 +5,22 @@ public class FilmeProcesso
     public FilmeProcesso()
     { }
 
-    public async Task<Filme> getFilme(string idFilme, string tituloFilme)
+    public async Task<Filme> GetFilme(string idFilme)
     {
         var repositorio = new FilmeRepositorio();
-        var filme = await repositorio.GetFilme(idFilme, tituloFilme);
+        var filme = await repositorio.GetFilme(idFilme);
         return filme;
     }
-    public async Task<List<Filme>> getFilmes(string busca)
+    public async Task<List<Filme>> GetFilmes(string busca)
     {
         var repositorio = new FilmeRepositorio();
         var filme = await repositorio.GetFilmes(busca);
+        return filme;
+    }
+    public async Task<Filme> GetFilmeBd(string idFilme)
+    {
+        var repositorioBd = new FilmeBdRepositorio();
+        var filme = await repositorioBd.GetFilme(idFilme);
         return filme;
     }
 }

@@ -7,30 +7,32 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase
     {
-        private readonly ILogger<FilmeController> _logger;
-
-        public FilmeController(ILogger<FilmeController> logger)
-        {
-            _logger = logger;
-        }
-
-        [Route("Pesquisar")]
+        [Route("FilmesApi")]
         [HttpGet]
         public async Task<List<Filme>> GetFilmes([FromQuery] string busca)
         {
             var filmeProcesso = new FilmeProcesso();
-            var filmes = await filmeProcesso.getFilmes(busca);
+            var filmes = await filmeProcesso.GetFilmes(busca);
 
             return filmes;
         }
 
-
-        [Route("PesquisarByIdTitulo")]
+        [Route("FilmesApiPorId")]
         [HttpGet]
-        public async Task<Filme> GetFilmeByIdOrTitle([FromQuery] string tituloFilme)
+        public async Task<Filme> GetFilmePorId([FromQuery] string idFilme)
         {
             var filmeProcesso = new FilmeProcesso();
-            var filme = await filmeProcesso.getFilme(null, tituloFilme);
+            var filme = await filmeProcesso.GetFilme(idFilme);
+
+            return filme;
+        }
+
+        [Route("FilmesBdPorId")]
+        [HttpGet]
+        public async Task<Filme> GetFilmeBdPorId([FromQuery] string idFilme)
+        {
+            var filmeProcesso = new FilmeProcesso();
+            var filme = await filmeProcesso.GetFilmeBd(idFilme);
 
             return filme;
         }

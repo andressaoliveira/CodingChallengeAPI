@@ -14,20 +14,9 @@ using System.Net.Http.Headers;
             new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
-    public async Task<Filme> GetFilme(string idFilme, string tituloFilme)
+    public async Task<Filme> GetFilme(string idFilme)
     {
-        string busca = "";
-
-        if(idFilme != null)
-        {
-            busca = $"i={idFilme}";
-        }
-        if (tituloFilme != null)
-        {
-            busca = $"{busca}&t={tituloFilme}";
-        }
-
-        HttpResponseMessage response = await cliente.GetAsync($"?apikey=a4a6b32f&{busca}");
+        HttpResponseMessage response = await cliente.GetAsync($"?apikey=a4a6b32f&i={idFilme}");
         if (response.IsSuccessStatusCode)
         {
             var dados = JsonConvert.DeserializeObject<Filme>(await response.Content.ReadAsStringAsync());
@@ -37,8 +26,7 @@ using System.Net.Http.Headers;
     }
     public async Task<List<Filme>> GetFilmes(string busca)
     {
-
-        HttpResponseMessage response = await cliente.GetAsync("?apikey=a4a6b32f&s=love");
+        HttpResponseMessage response = await cliente.GetAsync($"?apikey=a4a6b32f&s={busca}");
         if (response.IsSuccessStatusCode)
         {
             var dados = JsonConvert.DeserializeObject<List<Filme>>(await response.Content.ReadAsStringAsync());
