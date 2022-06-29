@@ -7,9 +7,9 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class ComentarioController : ControllerBase
     {
-        [Route("Comentarios")]
+        [Route("ComentariosByIdFilme")]
         [HttpGet]
-        public async Task<List<Comentario>> GetComentarios([FromQuery] string idFilme)
+        public async Task<List<Comentario>> GetComentariosByIdFilme([FromQuery] string idFilme)
         {
             var processo = new ComentariosProcesso();
             var comentarios = await processo.GetComentarios(idFilme);
@@ -22,6 +22,30 @@ namespace CodingChallengeAPI.Controllers
         {
             var processo = new ComentariosProcesso();
             await processo.FazerComentario(comentario);
+        }
+
+        [HttpPost]
+        [Route("AvaliarComentario")]
+        public async Task AvaliarComentario([FromBody] ComentarioAvaliacao avaliacao)
+        {
+            var processo = new ComentarioAvaliacaoProcesso();
+            await processo.FazerAvaliacao(avaliacao);
+        }
+
+        [HttpPut]
+        [Route("MarcarComoRepetido")]
+        public async Task MarcarComentarioComoRepetido([FromQuery] int idComentario, int idUsuario, bool repetido)
+        {
+            var processo = new ComentariosProcesso();
+            await processo.MarcarComentarioComoRepetido(idComentario, idUsuario, repetido);
+        }
+
+        [HttpDelete]
+        [Route("ExcluirComentario")]
+        public async Task ExcluirComentario([FromQuery] int idComentario, int idUsuario)
+        {
+            var processo = new ComentariosProcesso();
+            await processo.ExcluirComentario(idComentario, idUsuario);
         }
     }
 }

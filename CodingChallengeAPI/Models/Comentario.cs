@@ -9,5 +9,8 @@
         public int IdUsuario { get; set; }
 
         public string? Texto { get; set; }
+        public int Gostei { get; set; }
+        public int NaoGostei { get; set; }
+        public bool Repetido { get; set; }
     }
 }

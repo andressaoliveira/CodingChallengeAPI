@@ -8,11 +8,20 @@ public class ComentariosProcesso
     public async Task<List<Comentario>> GetComentarios(string idFilme)
     {
         var repositorio = new ComentariosBdRepositorio();
+        var processo = new ComentarioAvaliacaoProcesso();
         var comentarios = await repositorio.GetComentarios(idFilme);
+        foreach (var comentario in comentarios)
+        {
+            var avaliacoes = await processo.GetAvaliacoesByIdComentario(comentario.IdComentario);
+            comentario.Gostei = GetQuantidadeAvaliacoesTipo(avaliacoes, true);
+            comentario.NaoGostei = GetQuantidadeAvaliacoesTipo(avaliacoes, true);
+        }
         return comentarios;
     }
     public async Task FazerComentario(Comentario comentario)
     {
+        var perfilProcesso = new PerfilProcesso();
+
         var repositorio = new ComentariosBdRepositorio();
         await repositorio.FazerComentario(comentario);
 
@@ -20,29 +29,37 @@ public class ComentariosProcesso
         var usuario = await processo.GetUsuario(comentario.IdUsuario);
         if (usuario != null)
         {
-            var perfil = await ObterPerfilUsuario(usuario.Perfil, usuario.Pontos + 1);
+            var perfil = await perfilProcesso.ObterPerfilUsuario(usuario.Perfil, usuario.Pontos + 1);
             await processo.AtualizarPontuacao(usuario.IdUsuario, perfil, usuario.Pontos + 1);
         }
     }
-
-    private async Task<int> ObterPerfilUsuario(int perfilUsuario, int Pontos)
+    public async Task ExcluirComentario(int idComentario, int idUsuario)
     {
-        var processo = new PerfilProcesso();
-        var perfis = await processo.GetPerfis();
+        var repositorio = new ComentariosBdRepositorio();
 
-        for(int i = 0; i < perfis.Count; i++)
+        var processo = new UsuarioProcesso();
+        var usuario = await processo.GetUsuario(idUsuario);
+        if (usuario != null && usuario.Perfil == 4)
         {
-            if (perfilUsuario == perfis[i].IdPerfil)
-            {
-                var perfilSuperior = perfis[i + 1];
-                if (perfilSuperior != null && Pontos >= perfilSuperior.PontuacaoMinima)
-                {
-                    return perfilSuperior.IdPerfil;
-                }
-                return perfilUsuario;
-            }
+            await repositorio.ExcluirComentario(idComentario);
         }
-
-        return perfilUsuario;
     }
+    public async Task MarcarComentarioComoRepetido(int idComentario, int idUsuario, bool repetido)
+    {
+        var repositorio = new ComentariosBdRepositorio();
+
+        var processo = new UsuarioProcesso();
+        var usuario = await processo.GetUsuario(idUsuario);
+        if (usuario != null && usuario.Perfil == 4)
+        {
+            await repositorio.MarcarComentarioComoRepetido(idComentario, repetido);
+        }
+    }
+
+    private int GetQuantidadeAvaliacoesTipo(List<ComentarioAvaliacao> avaliacoes, bool tipo)
+    {
+        var gostei = avaliacoes.Select(a => a.Gostei == tipo);
+        return gostei.Count();
+    }
+
 }

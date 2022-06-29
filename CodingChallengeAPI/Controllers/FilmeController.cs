@@ -26,15 +26,5 @@ namespace CodingChallengeAPI.Controllers
 
             return filme;
         }
-
-        [Route("FilmesBdPorId")]
-        [HttpGet]
-        public async Task<Filme> GetFilmeBdPorId([FromQuery] string idFilme)
-        {
-            var filmeProcesso = new FilmeProcesso();
-            var filme = await filmeProcesso.GetFilmeBd(idFilme);
-
-            return filme;
-        }
     }
 }

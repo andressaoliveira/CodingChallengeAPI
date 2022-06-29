@@ -63,17 +63,14 @@ using MySqlConnector;
 
         return usuario;
     }
-
     public async Task CadastrarUsuario(Usuario usuario)
     {
 
         MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
-        MySqlCommand comando = new MySqlCommand("INSERT INTO Usuario (`Nome`,`Email`,`Senha`,`IdPerfil`,`Pontos`) VALUES (@nome, @email, @senha, @perfil, @pontos)", connection);
+        MySqlCommand comando = new MySqlCommand("INSERT INTO Usuario (`Nome`,`Email`,`Senha`) VALUES (@nome, @email, @senha)", connection);
         comando.Parameters.Add(new MySqlParameter("@nome", usuario.Nome));
         comando.Parameters.Add(new MySqlParameter("@email", usuario.Email));
         comando.Parameters.Add(new MySqlParameter("@senha", usuario.Senha));
-        comando.Parameters.Add(new MySqlParameter("@perfil", 1));
-        comando.Parameters.Add(new MySqlParameter("@pontos", 0));
 
         connection.Open();
         await comando.ExecuteReaderAsync();
@@ -95,8 +92,8 @@ using MySqlConnector;
     public async Task AtualizarPerfil(int idUsuario, int perfil)
     {
         MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
-        MySqlCommand comando = new MySqlCommand("UPDATE Usuario SET Perfil = @perfil WHERE IdUsuario = @idUsuario", connection);
-        comando.Parameters.Add(new MySqlParameter("@pontos", perfil));
+        MySqlCommand comando = new MySqlCommand("UPDATE Usuario SET IdPerfil = @perfil WHERE IdUsuario = @idUsuario", connection);
+        comando.Parameters.Add(new MySqlParameter("@perfil", perfil));
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 
         connection.Open();

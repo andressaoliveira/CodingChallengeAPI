@@ -34,5 +34,12 @@ namespace CodingChallengeAPI.Controllers
             var usuarioProcesso = new UsuarioProcesso();
             await usuarioProcesso.CadastrarUsuario(usuario);
         }
+        [Route("TornarModerador")]
+        [HttpPut]
+        public async Task TornarModerador([FromQuery] int idUsuarioModerador, [FromQuery] int idUsuario)
+        {
+            var usuarioProcesso = new UsuarioProcesso();
+            await usuarioProcesso.TornarModerador(idUsuarioModerador, idUsuario);
+        }
     }
 }

@@ -5,7 +5,63 @@
     "version": "1.0"
   },
   "paths": {
-    "/Filme/Pesquisar": {
+    "/Comentario/Comentarios": {
+      "get": {
+        "tags": [
+          "Comentario"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idFilme",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Comentario"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Comentario": {
+      "post": {
+        "tags": [
+          "Comentario"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Comentario"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Filme/FilmesApi": {
       "get": {
         "tags": [
           "Filme"
@@ -35,7 +91,7 @@
         }
       }
     },
-    "/Filme/PesquisarByIdTitulo": {
+    "/Filme/FilmesApiPorId": {
       "get": {
         "tags": [
           "Filme"
@@ -48,7 +104,34 @@
         "parameters": [
           {
             "in": "query",
-            "name": "tituloFilme",
+            "name": "idFilme",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Filme"
+            }
+          }
+        }
+      }
+    },
+    "/Filme/FilmesBdPorId": {
+      "get": {
+        "tags": [
+          "Filme"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idFilme",
             "type": "string"
           }
         ],
@@ -112,9 +195,54 @@
           }
         }
       }
+    },
+    "/Usuario/Cadastrar": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Usuario"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "Comentario": {
+      "type": "object",
+      "properties": {
+        "idComentario": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "idFilme": {
+          "type": "string"
+        },
+        "idUsuario": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "texto": {
+          "type": "string"
+        }
+      }
+    },
     "Filme": {
       "type": "object",
       "properties": {
@@ -163,7 +291,7 @@
     "Usuario": {
       "type": "object",
       "properties": {
-        "id": {
+        "idUsuario": {
           "format": "int32",
           "type": "integer"
         },
@@ -171,6 +299,9 @@
           "type": "string"
         },
         "email": {
+          "type": "string"
+        },
+        "senha": {
           "type": "string"
         },
         "pontos": {

@@ -26,7 +26,8 @@ using MySqlConnector;
                     IdComentario = reader.GetInt32(0),
                     IdFilme = reader.GetString(1),
                     IdUsuario = reader.GetInt32(2),
-                    Texto = reader.GetString(3)
+                    Texto = reader.GetString(3),
+                    Repetido = reader.GetBoolean(4)
                 };
                 comentarios.Add(comentario);
             }
@@ -40,7 +41,7 @@ using MySqlConnector;
 
         MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("INSERT INTO Comentario (`IdFilme`,`IdUsuario`,`Texto`) VALUES (@idFilme, @idUsuario, @texto)", connection);
-        //comando.Parameters.Add(new MySqlParameter("@idComentario", comentario.IdComentario));
+
         comando.Parameters.Add(new MySqlParameter("@idFilme", comentario.IdFilme));
         comando.Parameters.Add(new MySqlParameter("@idUsuario", comentario.IdUsuario));
         comando.Parameters.Add(new MySqlParameter("@texto", comentario.Texto));
@@ -50,6 +51,41 @@ using MySqlConnector;
         if (reader.HasRows)
         {
            
+        }
+        connection.Close();
+    }
+
+    public async Task ExcluirComentario(int idComentario)
+    {
+        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
+        MySqlCommand comando = new MySqlCommand(
+            "DELETE FROM ComentarioAvaliacao WHERE IdComentario=@idComentario; " +
+            "DELETE FROM Resposta WHERE IdComentario=@idComentario; " +
+            "DELETE FROM Comentario WHERE IdComentario=@idComentario; ", connection);
+
+        comando.Parameters.Add(new MySqlParameter("@IdComentario", idComentario));
+
+        connection.Open();
+        var reader = await comando.ExecuteReaderAsync();
+        if (reader.HasRows)
+        {
+
+        }
+        connection.Close();
+    }
+
+    public async Task MarcarComentarioComoRepetido(int idComentario, bool repetido)
+    {
+        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
+        MySqlCommand comando = new MySqlCommand("UPDATE Comentario SET Repetido = @repetido WHERE IdComentario = @idComentario", connection);
+        comando.Parameters.Add(new MySqlParameter("@idComentario", idComentario));
+        comando.Parameters.Add(new MySqlParameter("@repetido", repetido));
+
+        connection.Open();
+        var reader = await comando.ExecuteReaderAsync();
+        if (reader.HasRows)
+        {
+
         }
         connection.Close();
     }

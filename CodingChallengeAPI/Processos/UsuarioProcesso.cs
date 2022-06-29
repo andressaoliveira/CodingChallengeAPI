@@ -21,10 +21,19 @@ using CodingChallengeAPI.Models;
         var repositorio = new UsuarioBdRepositorio();
         await repositorio.CadastrarUsuario(usuario);
     }
+    public async Task TornarModerador(int idUsuarioModerador, int idUsuario)
+    {
+        var repositorio = new UsuarioBdRepositorio();
+        var usuarioModerador = await GetUsuario(idUsuarioModerador);
+        if (usuarioModerador.Perfil == 4)
+        {
+            await repositorio.AtualizarPerfil(idUsuario, 4);
+        }
+    }
+
     public async Task AtualizarPontuacao(int idUsuario, int perfil, int pontos)
     {
         var repositorio = new UsuarioBdRepositorio();
         await repositorio.AtualizarPontuacao(idUsuario, perfil, pontos);
-
     }
 }
