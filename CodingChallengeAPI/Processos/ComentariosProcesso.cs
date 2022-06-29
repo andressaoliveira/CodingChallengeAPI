@@ -13,8 +13,11 @@ public class ComentariosProcesso
         foreach (var comentario in comentarios)
         {
             var avaliacoes = await processo.GetAvaliacoesByIdComentario(comentario.IdComentario);
-            comentario.Gostei = GetQuantidadeAvaliacoesTipo(avaliacoes, true);
-            comentario.NaoGostei = GetQuantidadeAvaliacoesTipo(avaliacoes, true);
+            if (avaliacoes.Count > 0)
+            {
+                comentario.Gostei = GetQuantidadeAvaliacoesTipo(avaliacoes, true);
+                comentario.NaoGostei = GetQuantidadeAvaliacoesTipo(avaliacoes, false);
+            }
         }
         return comentarios;
     }
@@ -56,10 +59,9 @@ public class ComentariosProcesso
         }
     }
 
-    private int GetQuantidadeAvaliacoesTipo(List<ComentarioAvaliacao> avaliacoes, bool tipo)
+    private int GetQuantidadeAvaliacoesTipo(List<ComentarioAvaliacao> avaliacoes, bool gostei)
     {
-        var gostei = avaliacoes.Select(a => a.Gostei == tipo);
-        return gostei.Count();
+        return avaliacoes.FindAll(a => a.Gostei == gostei).Count();
     }
 
 }

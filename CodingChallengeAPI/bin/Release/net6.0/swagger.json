@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/Comentario/Comentarios": {
+    "/Comentario/ComentariosByIdFilme": {
       "get": {
         "tags": [
           "Comentario"
@@ -52,6 +52,89 @@
             "schema": {
               "$ref": "#/definitions/Comentario"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Comentario/AvaliarComentario": {
+      "post": {
+        "tags": [
+          "Comentario"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ComentarioAvaliacao"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Comentario/MarcarComoRepetido": {
+      "put": {
+        "tags": [
+          "Comentario"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idComentario",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "idUsuario",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "repetido",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Comentario/ExcluirComentario": {
+      "delete": {
+        "tags": [
+          "Comentario"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idComentario",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "idUsuario",
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
@@ -118,10 +201,10 @@
         }
       }
     },
-    "/Filme/FilmesBdPorId": {
+    "/Nota/NotasByFIlme": {
       "get": {
         "tags": [
-          "Filme"
+          "Nota"
         ],
         "produces": [
           "text/plain",
@@ -139,8 +222,93 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/Filme"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Nota"
+              }
             }
+          }
+        }
+      }
+    },
+    "/Nota": {
+      "post": {
+        "tags": [
+          "Nota"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Nota"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Resposta/RespostasByComentario": {
+      "get": {
+        "tags": [
+          "Resposta"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idComentario",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Resposta"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Resposta": {
+      "post": {
+        "tags": [
+          "Resposta"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Resposta"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -221,6 +389,32 @@
           }
         }
       }
+    },
+    "/Usuario/TornarModerador": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idUsuarioModerador",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "idUsuario",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -240,6 +434,37 @@
         },
         "texto": {
           "type": "string"
+        },
+        "gostei": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "naoGostei": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "repetido": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ComentarioAvaliacao": {
+      "type": "object",
+      "properties": {
+        "idAvaliacao": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "idComentario": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "idUsuario": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "gostei": {
+          "type": "boolean"
         }
       }
     },
@@ -284,6 +509,46 @@
           "type": "string"
         },
         "poster": {
+          "type": "string"
+        }
+      }
+    },
+    "Nota": {
+      "type": "object",
+      "properties": {
+        "idNota": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "idFilme": {
+          "type": "string"
+        },
+        "idUsuario": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "valorNota": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "Resposta": {
+      "type": "object",
+      "properties": {
+        "idResposta": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "idComentario": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "idUsuario": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "texto": {
           "type": "string"
         }
       }
