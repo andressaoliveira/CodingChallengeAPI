@@ -1,39 +1,44 @@
+using CodingChallengeAPI.Dominio;
+using CodingChallengeAPI.Util;
 using CodingChallengeAPI.Models;
-   public class UsuarioProcesso
+using Equipagem.API.Dominio.Excecao;
+
+public class UsuarioProcesso
 {
-    public UsuarioProcesso()
-    { }
+    private readonly UsuarioBdRepositorio usuarioBdRepositorio = new UsuarioBdRepositorio();
 
     public async Task<Usuario> GetUsuario(int idUsuario)
     {
-        var repositorio = new UsuarioBdRepositorio();
-        var usuario = await repositorio.GetUsuario(idUsuario);
+        var usuario = await usuarioBdRepositorio.GetUsuario(idUsuario);
         return usuario;
     }
+
     public async Task<List<Usuario>> GetUsuarios()
     {
-        var repositorio = new UsuarioBdRepositorio();
-        var usuarios = await repositorio.GetUsuarios();
+        var usuarios = await usuarioBdRepositorio.GetUsuarios();
+        if (usuarios.IsNullOrEmpty()) { 
+            throw new UsuarioException(); 
+        }
+
         return usuarios;
     }
+
     public async Task CadastrarUsuario(Usuario usuario)
     {
-        var repositorio = new UsuarioBdRepositorio();
-        await repositorio.CadastrarUsuario(usuario);
+        await usuarioBdRepositorio.CadastrarUsuario(usuario);
     }
+
     public async Task TornarModerador(int idUsuarioModerador, int idUsuario)
     {
-        var repositorio = new UsuarioBdRepositorio();
         var usuarioModerador = await GetUsuario(idUsuarioModerador);
-        if (usuarioModerador.Perfil == 4)
+        if (usuarioModerador.Perfil == PerfilUsuario.MODERADOR)
         {
-            await repositorio.AtualizarPerfil(idUsuario, 4);
+            await usuarioBdRepositorio.AtualizarPerfil(idUsuario, 4);
         }
     }
 
-    public async Task AtualizarPontuacao(int idUsuario, int perfil, int pontos)
+    public async Task AtualizarPontuacao(int idUsuario, PerfilUsuario perfil, int pontos)
     {
-        var repositorio = new UsuarioBdRepositorio();
-        await repositorio.AtualizarPontuacao(idUsuario, perfil, pontos);
+        await usuarioBdRepositorio.AtualizarPontuacao(idUsuario, perfil, pontos);
     }
 }

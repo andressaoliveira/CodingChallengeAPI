@@ -2,25 +2,21 @@ using CodingChallengeAPI.Models;
 
 public class FilmeProcesso
 {
-    public FilmeProcesso()
-    { }
+    private readonly FilmeRepositorio filmeRepositorio = new FilmeRepositorio();
 
     public async Task<Filme> GetFilme(string idFilme)
     {
-        var repositorio = new FilmeRepositorio();
-        var filme = await repositorio.GetFilme(idFilme);
+        var filme = await filmeRepositorio.GetFilme(idFilme);
         return filme;
     }
     public async Task<List<Filme>> GetFilmes(string busca)
     {
-        var repositorio = new FilmeRepositorio();
-        var filme = await repositorio.GetFilmes(busca);
+        var filme = await filmeRepositorio.GetFilmes(busca);
         return filme;
     }
     public async Task<Filme> GetFilmeBd(string idFilme)
     {
-        var repositorioBd = new FilmeBdRepositorio();
-        var filme = await repositorioBd.GetFilme(idFilme);
+        var filme = await filmeRepositorio.GetFilme(idFilme);
         return filme;
     }
 }

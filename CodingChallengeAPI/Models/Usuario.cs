@@ -1,4 +1,6 @@
-﻿namespace CodingChallengeAPI.Models
+﻿using CodingChallengeAPI.Dominio;
+
+namespace CodingChallengeAPI.Models
 {
     public class Usuario
     {
@@ -12,6 +14,6 @@
 
         public int Pontos { get; set; }
 
-        public int Perfil { get; set; }
+        public PerfilUsuario Perfil { get; set; }
     }
 }

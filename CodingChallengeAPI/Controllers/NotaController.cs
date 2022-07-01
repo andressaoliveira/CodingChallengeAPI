@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CodingChallengeAPI.Models;
+using System.Net;
 
 namespace CodingChallengeAPI.Controllers
 {
@@ -7,21 +8,36 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class NotaController : ControllerBase
     {
+        private readonly NotasProcesso notaProcesso = new NotasProcesso();
+
         [Route("NotasByFIlme")]
         [HttpGet]
-        public async Task<List<Nota>> GetNotasByFIlme([FromQuery] string idFilme)
+        public async Task<ActionResult> GetNotasByFIlme([FromQuery] string idFilme)
         {
-            var processo = new NotasProcesso();
-            var comentarios = await processo.GetNotas(idFilme);
+            try
+            {
+                var comentarios = await notaProcesso.GetNotas(idFilme);
 
-            return comentarios;
+                return Ok(comentarios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task DarNota([FromBody] Nota nota)
+        public async Task<ActionResult> DarNota([FromBody] Nota nota)
         {
-            var processo = new NotasProcesso();
-            await processo.DarNota(nota);
+            try
+            {
+                await notaProcesso.DarNota(nota);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
     }
 }

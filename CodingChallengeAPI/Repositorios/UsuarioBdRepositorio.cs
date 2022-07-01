@@ -1,15 +1,13 @@
+using CodingChallengeAPI.Dominio;
 using CodingChallengeAPI.Models;
 using MySqlConnector;
     
    public class UsuarioBdRepositorio
 {
-    public UsuarioBdRepositorio()
-    {
-    }
+    private readonly MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
 
     public async Task<List<Usuario>> GetUsuarios()
     {
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("SELECT * FROM Usuario", connection);
 
         connection.Open();
@@ -27,7 +25,7 @@ using MySqlConnector;
                     IdUsuario = reader.GetInt32(0),
                     Nome = reader.GetString(1),
                     Email = reader.GetString(2),
-                    Perfil = reader.GetInt32(4),
+                    Perfil = (PerfilUsuario) reader.GetInt32(4),
                     Pontos = reader.GetInt32(5),
                 };
                 usuarios.Add(usuario);
@@ -35,11 +33,11 @@ using MySqlConnector;
         }        
         return usuarios;
     }
+
     public async Task<Usuario> GetUsuario(int idUsuario)
     {
         var usuario = new Usuario();
 
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("SELECT * FROM Usuario where IdUsuario=@idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 
@@ -54,7 +52,7 @@ using MySqlConnector;
                     IdUsuario = reader.GetInt32(0),
                     Nome = reader.GetString(1),
                     Email = reader.GetString(2),
-                    Perfil = reader.GetInt32(4),
+                    Perfil = (PerfilUsuario) reader.GetInt32(4),
                     Pontos = reader.GetInt32(5),
                 };
             }
@@ -63,10 +61,9 @@ using MySqlConnector;
 
         return usuario;
     }
+
     public async Task CadastrarUsuario(Usuario usuario)
     {
-
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("INSERT INTO Usuario (`Nome`,`Email`,`Senha`) VALUES (@nome, @email, @senha)", connection);
         comando.Parameters.Add(new MySqlParameter("@nome", usuario.Nome));
         comando.Parameters.Add(new MySqlParameter("@email", usuario.Email));
@@ -76,9 +73,9 @@ using MySqlConnector;
         await comando.ExecuteReaderAsync();
         connection.Close();
     }
-    public async Task AtualizarPontuacao(int idUsuario, int perfil, int pontos)
+
+    public async Task AtualizarPontuacao(int idUsuario, PerfilUsuario perfil, int pontos)
     {
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("UPDATE Usuario SET Pontos = @pontos, IdPerfil = @perfil WHERE IdUsuario = @idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
         comando.Parameters.Add(new MySqlParameter("@perfil", perfil));
@@ -91,7 +88,6 @@ using MySqlConnector;
 
     public async Task AtualizarPerfil(int idUsuario, int perfil)
     {
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("UPDATE Usuario SET IdPerfil = @perfil WHERE IdUsuario = @idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@perfil", perfil));
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
@@ -100,4 +96,5 @@ using MySqlConnector;
         await comando.ExecuteReaderAsync();
         connection.Close();
     }
+
 }

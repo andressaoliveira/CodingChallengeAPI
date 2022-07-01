@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CodingChallengeAPI.Models;
+using System.Net;
 
 namespace CodingChallengeAPI.Controllers
 {
@@ -7,21 +8,35 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class RespostaController : ControllerBase
     {
+        private readonly RespostasProcesso respostaProcesso = new RespostasProcesso();
+
         [Route("RespostasByComentario")]
         [HttpGet]
-        public async Task<List<Resposta>> GetRespostasByComentario([FromQuery] string idComentario)
+        public async Task<ActionResult> GetRespostasByComentario([FromQuery] string idComentario)
         {
-            var processo = new RespostasProcesso();
-            var resposta = await processo.GetRespostasByIdComentario(idComentario);
-
-            return resposta;
+            try
+            {
+                var resposta = await respostaProcesso.GetRespostasByIdComentario(idComentario);
+                return Ok(resposta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task ResponderComentario([FromBody] Resposta resposta)
+        public async Task<ActionResult> ResponderComentario([FromBody] Resposta resposta)
         {
-            var processo = new RespostasProcesso();
-            await processo.ResponderComentario(resposta);
+            try
+            {
+                await respostaProcesso.ResponderComentario(resposta);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CodingChallengeAPI.Models;
+using System.Net;
 
 namespace CodingChallengeAPI.Controllers
 {
@@ -7,24 +8,37 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase
     {
+        private readonly FilmeProcesso filmeProcesso = new FilmeProcesso();
+
         [Route("FilmesApi")]
         [HttpGet]
-        public async Task<List<Filme>> GetFilmes([FromQuery] string busca)
+        public async Task<ActionResult> GetFilmes([FromQuery] string busca)
         {
-            var filmeProcesso = new FilmeProcesso();
-            var filmes = await filmeProcesso.GetFilmes(busca);
+            try
+            {
+                var filmes = await filmeProcesso.GetFilmes(busca);
 
-            return filmes;
+                return Ok(filmes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [Route("FilmesApiPorId")]
         [HttpGet]
-        public async Task<Filme> GetFilmePorId([FromQuery] string idFilme)
+        public async Task<ActionResult> GetFilmePorId([FromQuery] string idFilme)
         {
-            var filmeProcesso = new FilmeProcesso();
-            var filme = await filmeProcesso.GetFilme(idFilme);
-
-            return filme;
+            try
+            {
+                var filme = await filmeProcesso.GetFilme(idFilme);
+                return Ok(filme);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
     }
 }

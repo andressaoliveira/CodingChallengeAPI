@@ -1,33 +1,47 @@
+using CodingChallengeAPI.Dominio;
 using CodingChallengeAPI.Models;
+using CodingChallengeAPI.Util;
+using Equipagem.API.Dominio.Excecao;
 
 public class ComentarioAvaliacaoProcesso
 {
-    public ComentarioAvaliacaoProcesso()
-    { }
+    private readonly UsuarioProcesso usuarioProcesso = new UsuarioProcesso();
+    private readonly ComentarioAvaliacaoBdRepositorio comentarioAvaliacaoBdRepositorio = new ComentarioAvaliacaoBdRepositorio();
 
     public async Task FazerAvaliacao(ComentarioAvaliacao avaliacao)
     {
-        var repositorio = new ComentarioAvaliacaoBdRepositorio();
+        var usuario = await usuarioProcesso.GetUsuario(avaliacao.IdUsuario);
 
-        var processo = new UsuarioProcesso();
-        var usuario = await processo.GetUsuario(avaliacao.IdUsuario);
-        
-        if (usuario != null && (usuario.Perfil == 3 || usuario.Perfil == 4))
+        if(usuario == null)
         {
-            var avaliacaoAtual = await repositorio.GetAvaliacoesByIdComentarioIdUsuario(avaliacao.IdComentario, avaliacao.IdUsuario);
+            throw new UsuarioException();
+        }
+        
+        if (usuario.Perfil == PerfilUsuario.AVANCADO || usuario.Perfil == PerfilUsuario.MODERADOR)
+        {
+            var avaliacaoAtual = await comentarioAvaliacaoBdRepositorio.GetAvaliacoesByIdComentarioIdUsuario(avaliacao.IdComentario, avaliacao.IdUsuario);
 
             if (avaliacaoAtual.IdAvaliacao != 0)
             {
-                await repositorio.AtualizarAvaliacao(avaliacaoAtual.IdAvaliacao, avaliacao);
+                await comentarioAvaliacaoBdRepositorio.AtualizarAvaliacao(avaliacaoAtual.IdAvaliacao, avaliacao);
                 return;
             }
-            await repositorio.FazerAvaliacao(avaliacao);
+            await comentarioAvaliacaoBdRepositorio.FazerAvaliacao(avaliacao);
+        }
+        else
+        {
+            throw new PerfilException();
         }
     }
     public async Task<List<ComentarioAvaliacao>> GetAvaliacoesByIdComentario(int idComentario)
     {
-        var repositorio = new ComentarioAvaliacaoBdRepositorio();
-        var avaliacoes = await repositorio.GetAvaliacoesByIdComentario(idComentario);
+        var avaliacoes = await comentarioAvaliacaoBdRepositorio.GetAvaliacoesByIdComentario(idComentario);
+
+        if (avaliacoes.IsNullOrEmpty())
+        {
+            throw new ComentarioException();
+        }
+
         return avaliacoes;
     }
 }

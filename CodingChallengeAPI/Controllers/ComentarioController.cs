@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CodingChallengeAPI.Models;
+using System.Net;
+using Equipagem.API.Dominio.Excecao;
 
 namespace CodingChallengeAPI.Controllers
 {
@@ -7,45 +9,88 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class ComentarioController : ControllerBase
     {
+        private readonly ComentariosProcesso comentariosProcesso = new ComentariosProcesso();
+        private readonly ComentarioAvaliacaoProcesso comentarioAvaliacaoProcesso = new ComentarioAvaliacaoProcesso();
+
+
         [Route("ComentariosByIdFilme")]
         [HttpGet]
-        public async Task<List<Comentario>> GetComentariosByIdFilme([FromQuery] string idFilme)
+        public async Task<ActionResult> GetComentariosByIdFilme([FromQuery] string idFilme)
         {
-            var processo = new ComentariosProcesso();
-            var comentarios = await processo.GetComentarios(idFilme);
+            try
+            {
+                var comentarios = await comentariosProcesso.GetComentarios(idFilme);
+                return Ok(comentarios);
+            }
+            catch (ComentarioException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
 
-            return comentarios;
         }
 
         [HttpPost]
-        public async Task FazerComentario([FromBody] Comentario comentario)
+        public async Task<ActionResult> FazerComentario([FromBody] Comentario comentario)
         {
-            var processo = new ComentariosProcesso();
-            await processo.FazerComentario(comentario);
+            try
+            {
+                await comentariosProcesso.FazerComentario(comentario);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("AvaliarComentario")]
-        public async Task AvaliarComentario([FromBody] ComentarioAvaliacao avaliacao)
+        public async Task<ActionResult> AvaliarComentario([FromBody] ComentarioAvaliacao avaliacao)
         {
-            var processo = new ComentarioAvaliacaoProcesso();
-            await processo.FazerAvaliacao(avaliacao);
+            try
+            {
+                await comentarioAvaliacaoProcesso.FazerAvaliacao(avaliacao);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("MarcarComoRepetido")]
-        public async Task MarcarComentarioComoRepetido([FromQuery] int idComentario, int idUsuario, bool repetido)
+        public async Task<ActionResult> MarcarComentarioComoRepetido([FromQuery] int idComentario, int idUsuario, bool repetido)
         {
-            var processo = new ComentariosProcesso();
-            await processo.MarcarComentarioComoRepetido(idComentario, idUsuario, repetido);
+            try
+            {
+                await comentariosProcesso.MarcarComentarioComoRepetido(idComentario, idUsuario, repetido);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpDelete]
         [Route("ExcluirComentario")]
-        public async Task ExcluirComentario([FromQuery] int idComentario, int idUsuario)
+        public async Task<ActionResult> ExcluirComentario([FromQuery] int idComentario, int idUsuario)
         {
-            var processo = new ComentariosProcesso();
-            await processo.ExcluirComentario(idComentario, idUsuario);
+            try
+            {
+                await comentariosProcesso.ExcluirComentario(idComentario, idUsuario);
+                await comentariosProcesso.ExcluirComentario(idComentario, idUsuario);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
     }
 }

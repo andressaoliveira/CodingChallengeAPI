@@ -3,15 +3,12 @@ using MySqlConnector;
     
    public class NotasBdRepositorio
 {
-    public NotasBdRepositorio()
-    {
-    }
+    private readonly MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
 
     public async Task<List<Nota>> GetNotas(string idFilme)
     {
         var notas = new List<Nota>();
 
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("SELECT * FROM Nota where IdFilme=@idFilme", connection);
         comando.Parameters.Add(new MySqlParameter("@idFilme", idFilme));
 
@@ -40,7 +37,6 @@ using MySqlConnector;
     {
         var notas = new List<Nota>();
 
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("SELECT * FROM Nota where IdUsuario=@idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 
@@ -66,8 +62,6 @@ using MySqlConnector;
     }
     public async Task DarNota(Nota nota)
     {
-
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("INSERT INTO Nota (`IdFilme`,`IdUsuario`,`Nota`) VALUES (@idFilme, @idUsuario, @nota)", connection);
         comando.Parameters.Add(new MySqlParameter("@idFilme", nota.IdFilme));
         comando.Parameters.Add(new MySqlParameter("@idUsuario", nota.IdUsuario));
@@ -83,8 +77,6 @@ using MySqlConnector;
     }
     public async Task AtualizarNota(int idNota, int valorNota)
     {
-
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
         MySqlCommand comando = new MySqlCommand("UPDATE Nota SET Nota = @nota WHERE IdNota = @idNota", connection);
         comando.Parameters.Add(new MySqlParameter("@idNota", idNota));
         comando.Parameters.Add(new MySqlParameter("@nota", valorNota));
