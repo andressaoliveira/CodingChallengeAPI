@@ -8,7 +8,7 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class RespostaController : ControllerBase
     {
-        private readonly RespostasProcesso respostaProcesso = new RespostasProcesso();
+        private readonly RespostasProcesso respostaProcesso = new();
 
         [Route("RespostasByComentario")]
         [HttpGet]

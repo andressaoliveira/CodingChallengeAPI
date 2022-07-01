@@ -2,10 +2,12 @@ using CodingChallengeAPI.Util;
 using CodingChallengeAPI.Models;
 using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Enum;
+using CodingChallengeAPI.Repositorio;
 
+namespace CodingChallengeAPI.Processo;
 public class UsuarioProcesso
 {
-    private readonly UsuarioBdRepositorio usuarioBdRepositorio = new UsuarioBdRepositorio();
+    private readonly UsuarioBdRepositorio usuarioBdRepositorio = new();
 
     public async Task<Usuario?> GetUsuario(int idUsuario)
     {

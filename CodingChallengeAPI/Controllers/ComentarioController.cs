@@ -8,8 +8,8 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class ComentarioController : ControllerBase
     {
-        private readonly ComentariosProcesso comentariosProcesso = new ComentariosProcesso();
-        private readonly ComentarioAvaliacaoProcesso comentarioAvaliacaoProcesso = new ComentarioAvaliacaoProcesso();
+        private readonly ComentariosProcesso comentariosProcesso = new();
+        private readonly ComentarioAvaliacaoProcesso comentarioAvaliacaoProcesso = new();
 
 
         [Route("ComentariosByIdFilme")]

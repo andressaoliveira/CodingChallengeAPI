@@ -1,15 +1,16 @@
 using CodingChallengeAPI.Models;
 using MySqlConnector;
-    
-   public class ComentariosBdRepositorio
+
+namespace CodingChallengeAPI.Repositorio;
+public class ComentariosBdRepositorio
 {
-    private readonly MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
+    private readonly MySqlConnection connection = new("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
 
     public async Task<Comentario> GetComentario(int idComentario)
     {
         var comentario = new Comentario();
 
-        MySqlCommand comando = new MySqlCommand("SELECT * FROM Comentario where IdComentario=@idComentario", connection);
+        MySqlCommand comando = new("SELECT * FROM Comentario where IdComentario=@idComentario", connection);
         comando.Parameters.Add(new MySqlParameter("@idComentario", idComentario));
 
         connection.Open();
@@ -34,7 +35,7 @@ using MySqlConnector;
     {
         var comentarios = new List<Comentario>();
 
-        MySqlCommand comando = new MySqlCommand("SELECT * FROM Comentario where IdFilme=@idFilme", connection);
+        MySqlCommand comando = new("SELECT * FROM Comentario where IdFilme=@idFilme", connection);
         comando.Parameters.Add(new MySqlParameter("@idFilme", idFilme));
 
         connection.Open();
@@ -60,7 +61,7 @@ using MySqlConnector;
     }
     public async Task FazerComentario(Comentario comentario)
     {
-        MySqlCommand comando = new MySqlCommand("INSERT INTO Comentario (`IdFilme`,`IdUsuario`,`Texto`) VALUES (@idFilme, @idUsuario, @texto)", connection);
+        MySqlCommand comando = new("INSERT INTO Comentario (`IdFilme`,`IdUsuario`,`Texto`) VALUES (@idFilme, @idUsuario, @texto)", connection);
 
         comando.Parameters.Add(new MySqlParameter("@idFilme", comentario.IdFilme));
         comando.Parameters.Add(new MySqlParameter("@idUsuario", comentario.IdUsuario));
@@ -81,8 +82,8 @@ using MySqlConnector;
 
     public async Task ExcluirComentario(int idComentario)
     {
-        MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
-        MySqlCommand comando = new MySqlCommand(
+        MySqlConnection connection = new("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
+        MySqlCommand comando = new(
             "DELETE FROM ComentarioAvaliacao WHERE IdComentario=@idComentario; " +
             "DELETE FROM Resposta WHERE IdComentario=@idComentario; " +
             "DELETE FROM Comentario WHERE IdComentario=@idComentario; ", connection);
@@ -100,7 +101,7 @@ using MySqlConnector;
 
     public async Task MarcarComentarioComoRepetido(int idComentario, bool repetido)
     {
-        MySqlCommand comando = new MySqlCommand("UPDATE Comentario SET Repetido = @repetido WHERE IdComentario = @idComentario", connection);
+        MySqlCommand comando = new("UPDATE Comentario SET Repetido = @repetido WHERE IdComentario = @idComentario", connection);
         comando.Parameters.Add(new MySqlParameter("@idComentario", idComentario));
         comando.Parameters.Add(new MySqlParameter("@repetido", repetido));
 

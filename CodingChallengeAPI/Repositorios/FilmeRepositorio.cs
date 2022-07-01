@@ -4,10 +4,11 @@ using MySqlConnector;
 using Newtonsoft.Json;
 using System.Data;
 using System.Net.Http.Headers;
-    
-   public class FilmeRepositorio
+
+namespace CodingChallengeAPI.Repositorio;
+public class FilmeRepositorio
 {
-    HttpClient cliente = new HttpClient();
+    private readonly HttpClient cliente = new();
     public FilmeRepositorio()
     {
         cliente.BaseAddress = new Uri("http://www.omdbapi.com/?apikey=a4a6b32f&");

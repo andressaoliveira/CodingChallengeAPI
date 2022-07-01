@@ -1,15 +1,16 @@
 using CodingChallengeAPI.Models;
 using MySqlConnector;
-    
-   public class RespostasBdRepositorio
+
+namespace CodingChallengeAPI.Repositorio;
+public class RespostasBdRepositorio
 {
-    private readonly MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
+    private readonly MySqlConnection connection = new("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
 
     public async Task<List<Resposta>> GetRespostasByIdComentario(string idComentario)
     {
         var respostas = new List<Resposta>();
 
-        MySqlCommand comando = new MySqlCommand("SELECT * FROM Resposta where IdComentario=@idComentario", connection);
+        MySqlCommand comando = new("SELECT * FROM Resposta where IdComentario=@idComentario", connection);
         comando.Parameters.Add(new MySqlParameter("@idComentario", idComentario));
 
         connection.Open();
@@ -34,7 +35,7 @@ using MySqlConnector;
     }
     public async Task ResponderComentario(Resposta resposta)
     {
-        MySqlCommand comando = new MySqlCommand("INSERT INTO Resposta (`IdComentario`,`IdUsuario`,`Texto`) VALUES (@idComentario, @idUsuario, @texto)", connection);
+        MySqlCommand comando = new("INSERT INTO Resposta (`IdComentario`,`IdUsuario`,`Texto`) VALUES (@idComentario, @idUsuario, @texto)", connection);
 
         comando.Parameters.Add(new MySqlParameter("@idComentario", resposta.IdComentario));
         comando.Parameters.Add(new MySqlParameter("@idUsuario", resposta.IdUsuario));

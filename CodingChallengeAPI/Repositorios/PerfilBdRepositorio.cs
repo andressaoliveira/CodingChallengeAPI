@@ -1,13 +1,14 @@
 using CodingChallengeAPI.Models;
 using MySqlConnector;
-    
-   public class PerfilBdRepositorio
+
+namespace CodingChallengeAPI.Repositorio;
+public class PerfilBdRepositorio
 {
-    private readonly MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
+    private readonly MySqlConnection connection = new("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
 
     public async Task<List<Perfil>> GetPerfis()
     {
-        MySqlCommand comando = new MySqlCommand("SELECT * FROM Perfil", connection);
+        MySqlCommand comando = new("SELECT * FROM Perfil", connection);
 
         connection.Open();
 

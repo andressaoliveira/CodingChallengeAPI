@@ -1,14 +1,15 @@
 using CodingChallengeAPI.Enum;
 using CodingChallengeAPI.Models;
 using MySqlConnector;
-    
-   public class UsuarioBdRepositorio
+
+namespace CodingChallengeAPI.Repositorio;
+public class UsuarioBdRepositorio
 {
-    private readonly MySqlConnection connection = new MySqlConnection("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
+    private readonly MySqlConnection connection = new("server=mysqlserver.cv8svfzmm14w.us-east-1.rds.amazonaws.com;user=admin;password=CW5HgxwDg4fzYATuqWDv;database=dbcodingchallenge");
 
     public async Task<List<Usuario>> GetUsuarios()
     {
-        MySqlCommand comando = new MySqlCommand("SELECT * FROM Usuario", connection);
+        MySqlCommand comando = new("SELECT * FROM Usuario", connection);
 
         connection.Open();
 
@@ -36,7 +37,7 @@ using MySqlConnector;
 
     public async Task<Usuario?> GetUsuario(int idUsuario)
     {
-        MySqlCommand comando = new MySqlCommand("SELECT * FROM Usuario where IdUsuario=@idUsuario", connection);
+        MySqlCommand comando = new("SELECT * FROM Usuario where IdUsuario=@idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 
         connection.Open();
@@ -44,7 +45,7 @@ using MySqlConnector;
         if (reader.HasRows)
         {
 
-            Usuario usuario = new Usuario();
+            Usuario usuario = new();
             while (reader.Read())
             {
                 usuario = new Usuario()
@@ -65,7 +66,7 @@ using MySqlConnector;
 
     public async Task CadastrarUsuario(Usuario usuario)
     {
-        MySqlCommand comando = new MySqlCommand("INSERT INTO Usuario (`Nome`,`Email`,`Senha`) VALUES (@nome, @email, @senha)", connection);
+        MySqlCommand comando = new("INSERT INTO Usuario (`Nome`,`Email`,`Senha`) VALUES (@nome, @email, @senha)", connection);
         comando.Parameters.Add(new MySqlParameter("@nome", usuario.Nome));
         comando.Parameters.Add(new MySqlParameter("@email", usuario.Email));
         comando.Parameters.Add(new MySqlParameter("@senha", usuario.Senha));
@@ -85,7 +86,7 @@ using MySqlConnector;
 
     public async Task AtualizarPontuacao(int idUsuario, PerfilUsuario perfil, int pontos)
     {
-        MySqlCommand comando = new MySqlCommand("UPDATE Usuario SET Pontos = @pontos, IdPerfil = @perfil WHERE IdUsuario = @idUsuario", connection);
+        MySqlCommand comando = new("UPDATE Usuario SET Pontos = @pontos, IdPerfil = @perfil WHERE IdUsuario = @idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
         comando.Parameters.Add(new MySqlParameter("@perfil", perfil));
         comando.Parameters.Add(new MySqlParameter("@pontos", pontos));
@@ -105,7 +106,7 @@ using MySqlConnector;
 
     public async Task AtualizarPerfil(int idUsuario, int perfil)
     {
-        MySqlCommand comando = new MySqlCommand("UPDATE Usuario SET IdPerfil = @perfil WHERE IdUsuario = @idUsuario", connection);
+        MySqlCommand comando = new("UPDATE Usuario SET IdPerfil = @perfil WHERE IdUsuario = @idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@perfil", perfil));
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 

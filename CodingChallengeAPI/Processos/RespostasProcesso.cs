@@ -1,12 +1,14 @@
 using CodingChallengeAPI.Enum;
 using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
+using CodingChallengeAPI.Repositorio;
 
+namespace CodingChallengeAPI.Processo;
 public class RespostasProcesso
 {
-    private readonly RespostasBdRepositorio respostasBdRepositorio = new RespostasBdRepositorio();
-    private readonly PerfilProcesso perfilProcesso = new PerfilProcesso();
-    private readonly UsuarioProcesso usuarioProcesso = new UsuarioProcesso();
+    private readonly RespostasBdRepositorio respostasBdRepositorio = new();
+    private readonly PerfilProcesso perfilProcesso = new();
+    private readonly UsuarioProcesso usuarioProcesso = new();
 
     public async Task<List<Resposta>> GetRespostasByIdComentario(string idComentario)
     {

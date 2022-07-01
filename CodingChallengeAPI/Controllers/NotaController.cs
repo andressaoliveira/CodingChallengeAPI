@@ -8,7 +8,7 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class NotaController : ControllerBase
     {
-        private readonly NotasProcesso notaProcesso = new NotasProcesso();
+        private readonly NotasProcesso notaProcesso = new();
 
         [Route("NotasByFIlme")]
         [HttpGet]

@@ -1,12 +1,14 @@
 using CodingChallengeAPI.Enum;
 using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
+using CodingChallengeAPI.Repositorio;
 using CodingChallengeAPI.Util;
 
+namespace CodingChallengeAPI.Processo;
 public class ComentarioAvaliacaoProcesso
 {
-    private readonly UsuarioProcesso usuarioProcesso = new UsuarioProcesso();
-    private readonly ComentarioAvaliacaoBdRepositorio comentarioAvaliacaoBdRepositorio = new ComentarioAvaliacaoBdRepositorio();
+    private readonly UsuarioProcesso usuarioProcesso = new();
+    private readonly ComentarioAvaliacaoBdRepositorio comentarioAvaliacaoBdRepositorio = new();
 
     public async Task FazerAvaliacao(ComentarioAvaliacao avaliacao)
     {

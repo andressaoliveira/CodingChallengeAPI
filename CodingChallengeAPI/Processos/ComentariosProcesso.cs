@@ -1,14 +1,15 @@
 using CodingChallengeAPI.Enum;
 using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
-using CodingChallengeAPI.Util;
+using CodingChallengeAPI.Repositorio;
 
+namespace CodingChallengeAPI.Processo;
 public class ComentariosProcesso
 {
-    private readonly ComentariosBdRepositorio comentariosRepositorio = new ComentariosBdRepositorio();
-    private readonly ComentarioAvaliacaoProcesso comentarioAvaliacaoProcesso = new ComentarioAvaliacaoProcesso();
-    private readonly PerfilProcesso perfilProcesso = new PerfilProcesso();
-    private readonly UsuarioProcesso usuarioProcesso = new UsuarioProcesso();
+    private readonly ComentariosBdRepositorio comentariosRepositorio = new();
+    private readonly ComentarioAvaliacaoProcesso comentarioAvaliacaoProcesso = new();
+    private readonly PerfilProcesso perfilProcesso = new();
+    private readonly UsuarioProcesso usuarioProcesso = new();
 
     public async Task<List<Comentario>> GetComentarios(string idFilme)
     {
@@ -81,9 +82,9 @@ public class ComentariosProcesso
         }
     }
 
-    private int GetQuantidadeAvaliacoesTipo(List<ComentarioAvaliacao> avaliacoes, bool gostei)
+    private static int GetQuantidadeAvaliacoesTipo(List<ComentarioAvaliacao> avaliacoes, bool gostei)
     {
-        return avaliacoes.FindAll(a => a.Gostei == gostei).Count();
+        return avaliacoes.FindAll(a => a.Gostei == gostei).Count;
     }
 
 }

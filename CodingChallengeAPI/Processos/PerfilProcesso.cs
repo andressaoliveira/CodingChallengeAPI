@@ -1,9 +1,11 @@
 using CodingChallengeAPI.Enum;
 using CodingChallengeAPI.Models;
+using CodingChallengeAPI.Repositorio;
 
+namespace CodingChallengeAPI.Processo;
 public class PerfilProcesso
 {
-    private readonly PerfilBdRepositorio perfilBdRepositorio = new PerfilBdRepositorio();
+    private readonly PerfilBdRepositorio perfilBdRepositorio = new();
 
     public async Task<List<Perfil>> GetPerfis()
     {

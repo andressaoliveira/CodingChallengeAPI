@@ -8,7 +8,7 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase
     {
-        private readonly FilmeProcesso filmeProcesso = new FilmeProcesso();
+        private readonly FilmeProcesso filmeProcesso = new ();
 
         [Route("FilmesApi")]
         [HttpGet]

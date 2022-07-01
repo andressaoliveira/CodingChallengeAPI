@@ -8,7 +8,7 @@ namespace CodingChallengeAPI.Controllers
     [Route("[controller]")]
     public class UsuarioController : ControllerBase
     {
-        private readonly UsuarioProcesso usuarioProcesso = new UsuarioProcesso();
+        private readonly UsuarioProcesso usuarioProcesso = new();
 
 
         [Route("Usuarios")]

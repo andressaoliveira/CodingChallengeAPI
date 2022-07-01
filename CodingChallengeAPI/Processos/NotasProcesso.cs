@@ -1,11 +1,13 @@
 using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
+using CodingChallengeAPI.Repositorio;
 
+namespace CodingChallengeAPI.Processo;
 public class NotasProcesso
 {
-    private readonly NotasBdRepositorio notasBdRepositorio = new NotasBdRepositorio();
-    private readonly UsuarioProcesso usuarioProcesso = new UsuarioProcesso();
-    private readonly PerfilProcesso perfilProcesso = new PerfilProcesso();
+    private readonly NotasBdRepositorio notasBdRepositorio = new();
+    private readonly UsuarioProcesso usuarioProcesso = new();
+    private readonly PerfilProcesso perfilProcesso = new();
 
     public async Task<List<Nota>> GetNotas(string idFilme)
     {
