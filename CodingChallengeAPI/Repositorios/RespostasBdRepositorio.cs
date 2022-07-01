@@ -41,11 +41,15 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@texto", resposta.Texto));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-           
+            await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 }

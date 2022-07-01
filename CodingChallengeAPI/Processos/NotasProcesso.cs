@@ -1,3 +1,4 @@
+using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
 
 public class NotasProcesso
@@ -16,8 +17,9 @@ public class NotasProcesso
         var usuario = await usuarioProcesso.GetUsuario(nota.IdUsuario);
         if(usuario == null)
         {
-            return;
+            throw new UsuarioException();
         }
+
         var perfil = await perfilProcesso.ObterPerfilUsuario(usuario.Perfil, usuario.Pontos + 1);
 
         var notasUsuario = notasBdRepositorio.GetNotasByUsuario(nota.IdUsuario);

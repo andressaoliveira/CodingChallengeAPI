@@ -1,4 +1,4 @@
-using CodingChallengeAPI.Dominio;
+using CodingChallengeAPI.Enum;
 using CodingChallengeAPI.Models;
 
 public class PerfilProcesso

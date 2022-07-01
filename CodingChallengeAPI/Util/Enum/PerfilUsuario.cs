@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel;
 
-namespace CodingChallengeAPI.Dominio
+namespace CodingChallengeAPI.Enum
 {
         public enum PerfilUsuario
         {
-            //[Description("Leitor")]
+            [Description("Leitor")]
             LEITOR = 1,
-            //[Description("Básico")]
+            [Description("Básico")]
             BASICO = 2,
-            //[Description("Avançado")]
+            [Description("Avançado")]
             AVANCADO = 3,
-            //[Description("Moderador")]
+            [Description("Moderador")]
             MODERADOR = 4
         }
 

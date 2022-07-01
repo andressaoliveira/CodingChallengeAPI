@@ -32,7 +32,7 @@ using MySqlConnector;
 
         return avaliacoes;
     }
-    public async Task<ComentarioAvaliacao> GetAvaliacoesByIdComentarioIdUsuario(int idComentario, int idUsuario)
+    public async Task<ComentarioAvaliacao?> GetAvaliacoesByIdComentarioIdUsuario(int idComentario, int idUsuario)
     {
         var avaliacao = new ComentarioAvaliacao();
 
@@ -54,10 +54,11 @@ using MySqlConnector;
                     Gostei = reader.GetBoolean(3)
                 };
             }
+            return avaliacao;
         }
         connection.Close();
 
-        return avaliacao;
+        return null;
     }
     public async Task FazerAvaliacao(ComentarioAvaliacao avaliacao)
     {
@@ -68,12 +69,16 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@gostei", avaliacao.Gostei));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-           
+            await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task AtualizarAvaliacao(int idAvaliacao, ComentarioAvaliacao avaliacao)
@@ -84,12 +89,16 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@gostei", avaliacao.Gostei));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-
+            await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
 }

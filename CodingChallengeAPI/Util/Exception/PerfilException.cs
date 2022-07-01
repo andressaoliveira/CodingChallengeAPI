@@ -1,4 +1,4 @@
-﻿namespace Equipagem.API.Dominio.Excecao
+﻿namespace CodingChallengeAPI.Excecao
 {
     [Serializable]
     public class PerfilException : Exception

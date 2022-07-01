@@ -1,4 +1,4 @@
-using CodingChallengeAPI.Dominio;
+using CodingChallengeAPI.Enum;
 using CodingChallengeAPI.Models;
 using MySqlConnector;
     
@@ -34,10 +34,8 @@ using MySqlConnector;
         return usuarios;
     }
 
-    public async Task<Usuario> GetUsuario(int idUsuario)
+    public async Task<Usuario?> GetUsuario(int idUsuario)
     {
-        var usuario = new Usuario();
-
         MySqlCommand comando = new MySqlCommand("SELECT * FROM Usuario where IdUsuario=@idUsuario", connection);
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 
@@ -45,6 +43,8 @@ using MySqlConnector;
         var reader = await comando.ExecuteReaderAsync();
         if (reader.HasRows)
         {
+
+            Usuario usuario = new Usuario();
             while (reader.Read())
             {
                 usuario = new Usuario()
@@ -56,10 +56,11 @@ using MySqlConnector;
                     Pontos = reader.GetInt32(5),
                 };
             }
+            return usuario;
         }
         connection.Close();
 
-        return usuario;
+        return null;
     }
 
     public async Task CadastrarUsuario(Usuario usuario)
@@ -70,8 +71,16 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@senha", usuario.Senha));
 
         connection.Open();
-        await comando.ExecuteReaderAsync();
-        connection.Close();
+        try
+        {
+            await comando.ExecuteReaderAsync();
+            connection.Close();
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task AtualizarPontuacao(int idUsuario, PerfilUsuario perfil, int pontos)
@@ -82,8 +91,16 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@pontos", pontos));
 
         connection.Open();
-        await comando.ExecuteReaderAsync();
-        connection.Close();
+        try
+        {
+            await comando.ExecuteReaderAsync();
+            connection.Close();
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task AtualizarPerfil(int idUsuario, int perfil)
@@ -93,8 +110,16 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 
         connection.Open();
-        await comando.ExecuteReaderAsync();
-        connection.Close();
+        try
+        {
+            await comando.ExecuteReaderAsync();
+            connection.Close();
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
 }

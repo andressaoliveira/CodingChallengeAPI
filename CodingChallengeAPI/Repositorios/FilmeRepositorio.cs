@@ -1,3 +1,4 @@
+using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
 using MySqlConnector;
 using Newtonsoft.Json;
@@ -26,12 +27,20 @@ using System.Net.Http.Headers;
     }
     public async Task<List<Filme>> GetFilmes(string busca)
     {
-        HttpResponseMessage response = await cliente.GetAsync($"?apikey=a4a6b32f&s={busca}");
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var dados = JsonConvert.DeserializeObject<List<Filme>>(await response.Content.ReadAsStringAsync());
-            return dados ?? new List<Filme>();
+            HttpResponseMessage response = await cliente.GetAsync($"?apikey=a4a6b32f&s={busca}");
+            if (response.IsSuccessStatusCode)
+            {
+                var dados = JsonConvert.DeserializeObject<Busca>(await response.Content.ReadAsStringAsync());
+                return dados?.Search ?? new List<Filme>();
+            }
+
+            throw new ApiFilmeException();
         }
-        return new List<Filme>();
+        catch (Exception ex)
+        {
+            throw new FilmeException(ex.Message);
+        }
     }
 }

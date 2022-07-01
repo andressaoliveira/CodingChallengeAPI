@@ -67,12 +67,16 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@texto", comentario.Texto));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-           
+            await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task ExcluirComentario(int idComentario)
@@ -101,11 +105,15 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@repetido", repetido));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-
+            await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 }

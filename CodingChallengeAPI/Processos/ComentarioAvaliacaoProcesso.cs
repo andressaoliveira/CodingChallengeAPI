@@ -1,7 +1,7 @@
-using CodingChallengeAPI.Dominio;
+using CodingChallengeAPI.Enum;
+using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
 using CodingChallengeAPI.Util;
-using Equipagem.API.Dominio.Excecao;
 
 public class ComentarioAvaliacaoProcesso
 {
@@ -21,7 +21,7 @@ public class ComentarioAvaliacaoProcesso
         {
             var avaliacaoAtual = await comentarioAvaliacaoBdRepositorio.GetAvaliacoesByIdComentarioIdUsuario(avaliacao.IdComentario, avaliacao.IdUsuario);
 
-            if (avaliacaoAtual.IdAvaliacao != 0)
+            if (avaliacaoAtual != null)
             {
                 await comentarioAvaliacaoBdRepositorio.AtualizarAvaliacao(avaliacaoAtual.IdAvaliacao, avaliacao);
                 return;

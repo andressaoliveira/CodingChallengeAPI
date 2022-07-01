@@ -1,7 +1,7 @@
-using CodingChallengeAPI.Dominio;
+using CodingChallengeAPI.Enum;
+using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
 using CodingChallengeAPI.Util;
-using Equipagem.API.Dominio.Excecao;
 
 public class ComentariosProcesso
 {
@@ -13,10 +13,6 @@ public class ComentariosProcesso
     public async Task<List<Comentario>> GetComentarios(string idFilme)
     {
         var comentarios = await comentariosRepositorio.GetComentarios(idFilme);
-        if (comentarios.IsNullOrEmpty())
-        {
-            throw new ComentarioException();
-        }
 
         foreach (var comentario in comentarios)
         {
@@ -41,27 +37,47 @@ public class ComentariosProcesso
         await comentariosRepositorio.FazerComentario(comentario);
 
         var usuario = await usuarioProcesso.GetUsuario(comentario.IdUsuario);
-        if (usuario != null)
+        if (usuario == null)
         {
-            var perfil = await perfilProcesso.ObterPerfilUsuario(usuario.Perfil, usuario.Pontos + 1);
-            await usuarioProcesso.AtualizarPontuacao(usuario.IdUsuario, perfil, usuario.Pontos + 1);
+            throw new UsuarioException();
         }
+
+        var perfil = await perfilProcesso.ObterPerfilUsuario(usuario.Perfil, usuario.Pontos + 1);
+        await usuarioProcesso.AtualizarPontuacao(usuario.IdUsuario, perfil, usuario.Pontos + 1);     
     }
     public async Task ExcluirComentario(int idComentario, int idUsuario)
     {
         var usuario = await usuarioProcesso.GetUsuario(idUsuario);
+        if (usuario == null)
+        {
+            throw new UsuarioException();
+        }
+
         var comentario = await GetComentario(idComentario);
-        if (usuario != null && (usuario.Perfil == PerfilUsuario.MODERADOR || idUsuario == comentario.IdUsuario))
-            {
+        if (usuario.Perfil == PerfilUsuario.MODERADOR || idUsuario == comentario.IdUsuario)
+        { 
             await comentariosRepositorio.ExcluirComentario(idComentario);
+        }
+        else
+        {
+            throw new PerfilException();
         }
     }
     public async Task MarcarComentarioComoRepetido(int idComentario, int idUsuario, bool repetido)
     {
         var usuario = await usuarioProcesso.GetUsuario(idUsuario);
-        if (usuario != null && usuario.Perfil == PerfilUsuario.MODERADOR)
+        if (usuario == null)
+        {
+            throw new UsuarioException();
+        }
+
+        if (usuario.Perfil == PerfilUsuario.MODERADOR)
         {
             await comentariosRepositorio.MarcarComentarioComoRepetido(idComentario, repetido);
+        }
+        else
+        {
+            throw new PerfilException();
         }
     }
 

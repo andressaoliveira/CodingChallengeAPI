@@ -68,12 +68,16 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@nota", nota.ValorNota));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-           
+            await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
     public async Task AtualizarNota(int idNota, int valorNota)
     {
@@ -82,11 +86,15 @@ using MySqlConnector;
         comando.Parameters.Add(new MySqlParameter("@nota", valorNota));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-
+            await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 }

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CodingChallengeAPI.Models;
 using System.Net;
-using Equipagem.API.Dominio.Excecao;
 
 namespace CodingChallengeAPI.Controllers
 {
@@ -21,10 +20,6 @@ namespace CodingChallengeAPI.Controllers
             {
                 var comentarios = await comentariosProcesso.GetComentarios(idFilme);
                 return Ok(comentarios);
-            }
-            catch (ComentarioException ex)
-            {
-                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
-﻿using CodingChallengeAPI.Dominio;
+﻿
+using CodingChallengeAPI.Enum;
 
 namespace CodingChallengeAPI.Models
 {

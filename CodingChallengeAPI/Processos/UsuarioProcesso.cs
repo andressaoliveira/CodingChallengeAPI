@@ -1,13 +1,13 @@
-using CodingChallengeAPI.Dominio;
 using CodingChallengeAPI.Util;
 using CodingChallengeAPI.Models;
-using Equipagem.API.Dominio.Excecao;
+using CodingChallengeAPI.Excecao;
+using CodingChallengeAPI.Enum;
 
 public class UsuarioProcesso
 {
     private readonly UsuarioBdRepositorio usuarioBdRepositorio = new UsuarioBdRepositorio();
 
-    public async Task<Usuario> GetUsuario(int idUsuario)
+    public async Task<Usuario?> GetUsuario(int idUsuario)
     {
         var usuario = await usuarioBdRepositorio.GetUsuario(idUsuario);
         return usuario;
@@ -31,6 +31,11 @@ public class UsuarioProcesso
     public async Task TornarModerador(int idUsuarioModerador, int idUsuario)
     {
         var usuarioModerador = await GetUsuario(idUsuarioModerador);
+        if (usuarioModerador == null)
+        {
+            throw new UsuarioException();
+        }
+
         if (usuarioModerador.Perfil == PerfilUsuario.MODERADOR)
         {
             await usuarioBdRepositorio.AtualizarPerfil(idUsuario, 4);

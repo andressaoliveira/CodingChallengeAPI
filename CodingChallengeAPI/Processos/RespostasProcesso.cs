@@ -1,4 +1,5 @@
-using CodingChallengeAPI.Dominio;
+using CodingChallengeAPI.Enum;
+using CodingChallengeAPI.Excecao;
 using CodingChallengeAPI.Models;
 
 public class RespostasProcesso
@@ -15,7 +16,12 @@ public class RespostasProcesso
     public async Task ResponderComentario(Resposta resposta)
     {
         var usuario = await usuarioProcesso.GetUsuario(resposta.IdUsuario);
-        if (usuario != null && usuario.Perfil != PerfilUsuario.LEITOR)
+        if (usuario == null)
+        {
+            throw new UsuarioException();
+        }
+
+        if (usuario.Perfil != PerfilUsuario.LEITOR)
         {
             await respostasBdRepositorio.ResponderComentario(resposta);
             var perfil = await perfilProcesso.ObterPerfilUsuario(usuario.Perfil, usuario.Pontos + 1);
