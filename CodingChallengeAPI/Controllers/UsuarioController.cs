@@ -11,24 +11,7 @@ namespace CodingChallengeAPI.Controllers
     {
         private readonly UsuarioProcesso usuarioProcesso = new();
 
-
-        [Route("Usuarios")]
-        [HttpGet]
-        public async Task<ActionResult> GetUsuarios()
-        {
-            try
-            {
-                var usuarios = await usuarioProcesso.GetUsuarios();
-
-                return Ok(usuarios);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
-            }
-        }
-
-        [Route("Usuario")]
+        [Route("")]
         [HttpGet]
         public async Task<ActionResult> GetUsuario([FromQuery] int idUsuario)
         {
@@ -43,7 +26,7 @@ namespace CodingChallengeAPI.Controllers
             }
         }
 
-        [Route("Cadastrar")]
+        [Route("")]
         [HttpPost]
         public async Task<ActionResult> CadastrarUsuario([FromBody] Usuario usuario)
         {
@@ -51,6 +34,22 @@ namespace CodingChallengeAPI.Controllers
             {
                 await usuarioProcesso.CadastrarUsuario(usuario);
                 return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [Route("Todos")]
+        [HttpGet]
+        public async Task<ActionResult> GetUsuarios()
+        {
+            try
+            {
+                var usuarios = await usuarioProcesso.GetUsuarios();
+
+                return Ok(usuarios);
             }
             catch (Exception ex)
             {
