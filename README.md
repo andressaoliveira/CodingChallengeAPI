@@ -7,7 +7,7 @@ Exemplo de Get: https://localhost:7197/Filme/FilmesApiPorId?idFilme=tt1570728
 
 # Rotas:
 
-## Comentario:
+## &emsp; Comentario:
 ### GET/Comentario/ComentariosByIdFilme?idFilme - Busca todos comentários de um filme
 /Comentario/ComentariosByIdFilme?idFilme=tt1570728
 
@@ -28,7 +28,7 @@ Body: idComentario, idComentario, goste i(true ou false)
 
 
 
-## Filme:
+## &emsp; Filme:
 ### GET /Filme/FilmesApi - Faz busca por uma string
 /Filme/FilmesApi?busca=love
 
@@ -37,7 +37,7 @@ Body: idComentario, idComentario, goste i(true ou false)
 
 
 
-## Nota:
+## &emsp; Nota:
 
 ### GET /Nota/NotasByFIlme - Busca as notas do filme pelo seu Id
 /Nota/NotasByFIlme?idFilme=tt1570728
@@ -46,7 +46,10 @@ Body: idComentario, idComentario, goste i(true ou false)
 Body: idFilme, idUsuario, valorNota
 
 
-## Resposta:
+
+
+
+## &emsp; Resposta:
 ### GET /Resposta/RespostasByComentario - Busca as respostas de um comentário
 /Resposta/RespostasByComentario?idComentario=
 
@@ -54,7 +57,10 @@ Body: idFilme, idUsuario, valorNota
 Body: idComentario, idUsuario, texto
 
 
-## Usuário:
+
+
+
+## &emsp; Usuário:
 
 ### GET /Usuario - Buscar usuário por Id
 
