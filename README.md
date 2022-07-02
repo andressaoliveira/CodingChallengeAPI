@@ -25,7 +25,7 @@ Body: idComentario, idComentario, goste i(true ou false)
 /Comentario/ExcluirComentario?idComentario=6&idUsuario=1
 
 
-
+<br /><br />
 
 
 ## &emsp; Filme:
@@ -36,6 +36,7 @@ Body: idComentario, idComentario, goste i(true ou false)
 /Filme/FilmesApiPorId?idFilme=tt1570728
 
 
+<br /><br />
 
 ## &emsp; Nota:
 
@@ -46,7 +47,7 @@ Body: idComentario, idComentario, goste i(true ou false)
 Body: idFilme, idUsuario, valorNota
 
 
-
+<br /><br />
 
 
 ## &emsp; Resposta:
@@ -57,7 +58,7 @@ Body: idFilme, idUsuario, valorNota
 Body: idComentario, idUsuario, texto
 
 
-
+<br /><br />
 
 
 ## &emsp; Usuário:
