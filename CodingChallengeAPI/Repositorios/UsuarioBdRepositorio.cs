@@ -12,27 +12,35 @@ public class UsuarioBdRepositorio
         MySqlCommand comando = new("SELECT * FROM Usuario", connection);
 
         connection.Open();
-
-        var reader = await comando.ExecuteReaderAsync();
-      
-        var usuarios = new List<Usuario>();
-
-        if (reader.HasRows)
+        try
         {
-            while (reader.Read())
+
+            var reader = await comando.ExecuteReaderAsync();
+
+            var usuarios = new List<Usuario>();
+
+            if (reader.HasRows)
             {
-                var usuario = new Usuario()
+                while (reader.Read())
                 {
-                    IdUsuario = reader.GetInt32(0),
-                    Nome = reader.GetString(1),
-                    Email = reader.GetString(2),
-                    Perfil = (PerfilUsuario) reader.GetInt32(4),
-                    Pontos = reader.GetInt32(5),
-                };
-                usuarios.Add(usuario);
+                    var usuario = new Usuario()
+                    {
+                        IdUsuario = reader.GetInt32(0),
+                        Nome = reader.GetString(1),
+                        Email = reader.GetString(2),
+                        Perfil = (PerfilUsuario)reader.GetInt32(4),
+                        Pontos = reader.GetInt32(5),
+                    };
+                    usuarios.Add(usuario);
+                }
             }
-        }        
-        return usuarios;
+            return usuarios;
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task<Usuario?> GetUsuario(int idUsuario)
@@ -42,26 +50,34 @@ public class UsuarioBdRepositorio
 
         connection.Open();
         var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-
-            Usuario usuario = new();
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                usuario = new Usuario()
+
+                Usuario usuario = new();
+                while (reader.Read())
                 {
-                    IdUsuario = reader.GetInt32(0),
-                    Nome = reader.GetString(1),
-                    Email = reader.GetString(2),
-                    Perfil = (PerfilUsuario) reader.GetInt32(4),
-                    Pontos = reader.GetInt32(5),
-                };
+                    usuario = new Usuario()
+                    {
+                        IdUsuario = reader.GetInt32(0),
+                        Nome = reader.GetString(1),
+                        Email = reader.GetString(2),
+                        Perfil = (PerfilUsuario)reader.GetInt32(4),
+                        Pontos = reader.GetInt32(5),
+                    };
+                }
+                connection.Close();
+                return usuario;
             }
             connection.Close();
-            return usuario;
+            return null;
         }
-        connection.Close();
-        return null;
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task CadastrarUsuario(Usuario usuario)

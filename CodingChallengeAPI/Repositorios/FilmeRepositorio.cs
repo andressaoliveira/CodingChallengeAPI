@@ -18,13 +18,20 @@ public class FilmeRepositorio
 
     public async Task<Filme> GetFilme(string idFilme)
     {
-        HttpResponseMessage response = await cliente.GetAsync($"?apikey=a4a6b32f&i={idFilme}");
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var dados = JsonConvert.DeserializeObject<Filme>(await response.Content.ReadAsStringAsync());
-            return dados ?? new Filme();
+            HttpResponseMessage response = await cliente.GetAsync($"?apikey=a4a6b32f&i={idFilme}");
+            if (response.IsSuccessStatusCode)
+            {
+                var dados = JsonConvert.DeserializeObject<Filme>(await response.Content.ReadAsStringAsync());
+                return dados ?? new Filme();
+            }
+            return new Filme();
         }
-        return new Filme();
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
     public async Task<List<Filme>> GetFilmes(string busca)
     {

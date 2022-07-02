@@ -14,24 +14,32 @@ public class RespostasBdRepositorio
         comando.Parameters.Add(new MySqlParameter("@idComentario", idComentario));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-            while (reader.Read())
+            var reader = await comando.ExecuteReaderAsync();
+            if (reader.HasRows)
             {
-                var resposta = new Resposta()
+                while (reader.Read())
                 {
-                    IdResposta = reader.GetInt32(0),
-                    IdComentario = reader.GetInt32(1),
-                    IdUsuario = reader.GetInt32(2),
-                    Texto = reader.GetString(3)
-                };
-                respostas.Add(resposta);
+                    var resposta = new Resposta()
+                    {
+                        IdResposta = reader.GetInt32(0),
+                        IdComentario = reader.GetInt32(1),
+                        IdUsuario = reader.GetInt32(2),
+                        Texto = reader.GetString(3)
+                    };
+                    respostas.Add(resposta);
+                }
             }
-        }
-        connection.Close();
+            connection.Close();
 
-        return respostas;
+            return respostas;
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
     public async Task ResponderComentario(Resposta resposta)
     {

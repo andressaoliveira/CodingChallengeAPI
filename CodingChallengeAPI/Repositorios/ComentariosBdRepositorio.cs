@@ -14,21 +14,30 @@ public class ComentariosBdRepositorio
         comando.Parameters.Add(new MySqlParameter("@idComentario", idComentario));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
-        {
-            comentario = new Comentario()
-            {
-                IdComentario = reader.GetInt32(0),
-                IdFilme = reader.GetString(1),
-                IdUsuario = reader.GetInt32(2),
-                Texto = reader.GetString(3),
-                Repetido = reader.GetBoolean(4)
-            };
-        }
-        connection.Close();
 
-        return comentario;
+        try
+        {
+            var reader = await comando.ExecuteReaderAsync();
+            if (reader.HasRows)
+            {
+                comentario = new Comentario()
+                {
+                    IdComentario = reader.GetInt32(0),
+                    IdFilme = reader.GetString(1),
+                    IdUsuario = reader.GetInt32(2),
+                    Texto = reader.GetString(3),
+                    Repetido = reader.GetBoolean(4)
+                };
+            }
+            connection.Close();
+
+            return comentario;
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task<List<Comentario>> GetComentarios(string idFilme)
@@ -39,25 +48,33 @@ public class ComentariosBdRepositorio
         comando.Parameters.Add(new MySqlParameter("@idFilme", idFilme));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-            while (reader.Read())
+            var reader = await comando.ExecuteReaderAsync();
+            if (reader.HasRows)
             {
-                var comentario = new Comentario()
+                while (reader.Read())
                 {
-                    IdComentario = reader.GetInt32(0),
-                    IdFilme = reader.GetString(1),
-                    IdUsuario = reader.GetInt32(2),
-                    Texto = reader.GetString(3),
-                    Repetido = reader.GetBoolean(4)
-                };
-                comentarios.Add(comentario);
+                    var comentario = new Comentario()
+                    {
+                        IdComentario = reader.GetInt32(0),
+                        IdFilme = reader.GetString(1),
+                        IdUsuario = reader.GetInt32(2),
+                        Texto = reader.GetString(3),
+                        Repetido = reader.GetBoolean(4)
+                    };
+                    comentarios.Add(comentario);
+                }
             }
-        }
-        connection.Close();
+            connection.Close();
 
-        return comentarios;
+            return comentarios;
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
     public async Task FazerComentario(Comentario comentario)
     {
@@ -91,12 +108,16 @@ public class ComentariosBdRepositorio
         comando.Parameters.Add(new MySqlParameter("@IdComentario", idComentario));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-
+            var reader = await comando.ExecuteReaderAsync();
+            connection.Close();
         }
-        connection.Close();
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task MarcarComentarioComoRepetido(int idComentario, bool repetido)

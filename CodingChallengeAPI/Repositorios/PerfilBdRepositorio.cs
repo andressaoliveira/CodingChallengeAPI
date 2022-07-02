@@ -11,24 +11,29 @@ public class PerfilBdRepositorio
         MySqlCommand comando = new("SELECT * FROM Perfil", connection);
 
         connection.Open();
-
-        var reader = await comando.ExecuteReaderAsync();
-      
-        var perfis = new List<Perfil>();
-
-        if (reader.HasRows)
+        try
         {
-            while (reader.Read())
+            var reader = await comando.ExecuteReaderAsync();
+            var perfis = new List<Perfil>();
+            if (reader.HasRows)
             {
-                var perfil = new Perfil()
+                while (reader.Read())
                 {
-                    IdPerfil = reader.GetInt32(0),
-                    NomePerfil = reader.GetString(1),
-                    PontuacaoMinima = reader.GetInt32(2)
-                };
-                perfis.Add(perfil);
+                    var perfil = new Perfil()
+                    {
+                        IdPerfil = reader.GetInt32(0),
+                        NomePerfil = reader.GetString(1),
+                        PontuacaoMinima = reader.GetInt32(2)
+                    };
+                    perfis.Add(perfil);
+                }
             }
-        }        
-        return perfis;
+            return perfis;
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 }

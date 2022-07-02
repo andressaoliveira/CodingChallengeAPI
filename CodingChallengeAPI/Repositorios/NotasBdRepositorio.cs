@@ -14,24 +14,32 @@ public class NotasBdRepositorio
         comando.Parameters.Add(new MySqlParameter("@idFilme", idFilme));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-            while (reader.Read())
+            var reader = await comando.ExecuteReaderAsync();
+            if (reader.HasRows)
             {
-                var nota = new Nota()
+                while (reader.Read())
                 {
-                    IdNota = reader.GetInt32(0),
-                    IdFilme = reader.GetString(1),
-                    IdUsuario = reader.GetInt32(2),
-                    ValorNota = reader.GetInt32(3)
-                };
-                notas.Add(nota);
+                    var nota = new Nota()
+                    {
+                        IdNota = reader.GetInt32(0),
+                        IdFilme = reader.GetString(1),
+                        IdUsuario = reader.GetInt32(2),
+                        ValorNota = reader.GetInt32(3)
+                    };
+                    notas.Add(nota);
+                }
             }
-        }
-        connection.Close();
+            connection.Close();
 
-        return notas;
+            return notas;
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task<List<Nota>> GetNotasByUsuario(int idUsuario)
@@ -42,24 +50,32 @@ public class NotasBdRepositorio
         comando.Parameters.Add(new MySqlParameter("@idUsuario", idUsuario));
 
         connection.Open();
-        var reader = await comando.ExecuteReaderAsync();
-        if (reader.HasRows)
+        try
         {
-            while (reader.Read())
+            var reader = await comando.ExecuteReaderAsync();
+            if (reader.HasRows)
             {
-                var nota = new Nota()
+                while (reader.Read())
                 {
-                    IdNota = reader.GetInt32(0),
-                    IdFilme = reader.GetString(1),
-                    IdUsuario = reader.GetInt32(2),
-                    ValorNota = reader.GetInt32(3)
-                };
-                notas.Add(nota);
+                    var nota = new Nota()
+                    {
+                        IdNota = reader.GetInt32(0),
+                        IdFilme = reader.GetString(1),
+                        IdUsuario = reader.GetInt32(2),
+                        ValorNota = reader.GetInt32(3)
+                    };
+                    notas.Add(nota);
+                }
             }
-        }
-        connection.Close();
+            connection.Close();
 
-        return notas;
+            return notas;
+        }
+        catch (Exception ex)
+        {
+            connection.Close();
+            throw new Exception(ex.Message);
+        }
     }
     public async Task DarNota(Nota nota)
     {
