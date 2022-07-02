@@ -2,7 +2,7 @@
 
 Link da API Publicada: https://codingchallengeapi.azurewebsites.net
 
-Exemplo de Get: https://localhost:7197/Filme/FilmesApiPorId?idFilme=tt1570728
+Exemplo de Get: https://codingchallengeapi.azurewebsites.net/Filme/FilmesApiPorId?idFilme=tt1570728
 
 
 # Rotas:
