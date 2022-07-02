@@ -18,8 +18,40 @@ Body: IdFilme, IdUsuario, Texto
 ### PUT /Comentario/AvaliarComentario - Avalia um comentário (Gostei ou NãoGostei)
 Body: idComentario, idComentario, goste i(true ou false)
 
+### PUT /Comentario/MarcarComoRepetido - Marca/Desmarca comentario como Repetido ou 
+/Comentario/MarcarComoRepetido?idComentario=3&idUsuario=1&repetido=true
+
+### DELETE - /Comentario/ExcluirComentario - Apaga um comentário
+/Comentario/ExcluirComentario?idComentario=6&idUsuario=1
 
 
+
+
+
+## Filme:
+### GET /Filme/FilmesApi - Faz busca por uma string
+/Filme/FilmesApi?busca=love
+
+### GET - Busca um filme pelo seu Id
+/Filme/FilmesApiPorId?idFilme=tt1570728
+
+
+
+## Nota:
+
+### GET /Nota/NotasByFIlme - Busca as notas do filme pelo seu Id
+/Nota/NotasByFIlme?idFilme=tt1570728
+
+### POST
+Body: idFilme, idUsuario, valorNota
+
+
+## Resposta:
+### GET /Resposta/RespostasByComentario - Busca as respostas de um comentário
+/Resposta/RespostasByComentario?idComentario=
+
+### POST /Resposta - Cria uma resposta para um comentário
+Body: idComentario, idUsuario, texto
 
 
 ## Usuário:
