@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CodingChallengeAPI.Models;
 using System.Net;
+using CodingChallengeAPI.Processo;
 
 namespace CodingChallengeAPI.Controllers
 {

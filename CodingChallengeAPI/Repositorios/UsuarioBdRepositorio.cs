@@ -57,10 +57,10 @@ public class UsuarioBdRepositorio
                     Pontos = reader.GetInt32(5),
                 };
             }
+            connection.Close();
             return usuario;
         }
         connection.Close();
-
         return null;
     }
 

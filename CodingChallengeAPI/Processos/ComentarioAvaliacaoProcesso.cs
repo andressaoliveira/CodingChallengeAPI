@@ -39,11 +39,6 @@ public class ComentarioAvaliacaoProcesso
     {
         var avaliacoes = await comentarioAvaliacaoBdRepositorio.GetAvaliacoesByIdComentario(idComentario);
 
-        if (avaliacoes.IsNullOrEmpty())
-        {
-            throw new ComentarioException();
-        }
-
         return avaliacoes;
     }
 }

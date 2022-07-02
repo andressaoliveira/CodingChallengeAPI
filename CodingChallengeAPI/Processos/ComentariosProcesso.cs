@@ -35,13 +35,13 @@ public class ComentariosProcesso
     }
     public async Task FazerComentario(Comentario comentario)
     {
-        await comentariosRepositorio.FazerComentario(comentario);
-
         var usuario = await usuarioProcesso.GetUsuario(comentario.IdUsuario);
         if (usuario == null)
         {
             throw new UsuarioException();
         }
+
+        await comentariosRepositorio.FazerComentario(comentario);
 
         var perfil = await perfilProcesso.ObterPerfilUsuario(usuario.Perfil, usuario.Pontos + 1);
         await usuarioProcesso.AtualizarPontuacao(usuario.IdUsuario, perfil, usuario.Pontos + 1);     

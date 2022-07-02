@@ -16,6 +16,10 @@ public class PerfilProcesso
     {
         var perfis = await GetPerfis();
 
+        if (perfilUsuario == PerfilUsuario.MODERADOR)
+            return perfilUsuario;
+
+
         for (int i = 0; i < perfis.Count; i++)
         {
             if (perfilUsuario == (PerfilUsuario) perfis[i].IdPerfil)

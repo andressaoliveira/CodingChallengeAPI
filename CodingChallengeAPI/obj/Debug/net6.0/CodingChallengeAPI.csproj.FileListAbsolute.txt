@@ -26,3 +26,4 @@ C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\ref\CodingChallengeAPI.dll
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.pdb
 C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.genruntimeconfig.cache
+C:\Users\DTI Digital\Desktop\CodingChallengeAPI\CodingChallengeAPI\obj\Debug\net6.0\CodingChallengeAPI.csproj.AssemblyReference.cache
